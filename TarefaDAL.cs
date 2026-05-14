@@ -82,20 +82,25 @@ namespace Desafio_AD_BD
             Conectar();
 
             string sql = @"
-                SELECT
-                    t.ic_tipo_manutencao AS Manutencao,
-                    p.nm_peca AS Peca,
-                    t.ic_tipo_servico AS Servico,
-                    t.dt_manutencao AS Data,
-                    t.ds_observacoes AS Observacoes
-                FROM Tarefa t
-                INNER JOIN Equipamento e
-                    ON t.cd_equipamento = e.cd_equipamento
-                INNER JOIN Peca p
-                    ON t.cd_peca = p.cd_peca
-                WHERE e.cd_patrimonio = @patrimonio
-                AND t.dt_manutencao BETWEEN @inicio AND @fim
-                ORDER BY t.dt_manutencao";
+                        SELECT
+                            u.nm_usuario AS Usuario,
+                            e.nm_local AS Local,
+                            e.nm_fabricante + ' ' + e.nm_modelo AS Equipamento,
+                            t.ic_tipo_manutencao AS Manutencao,
+                            p.nm_peca AS Peca,
+                            t.ic_tipo_servico AS Servico,
+                            t.dt_manutencao AS Data,
+                            t.ds_observacoes AS Observacoes
+                        FROM Tarefa t
+                        INNER JOIN Equipamento e
+                            ON t.cd_equipamento = e.cd_equipamento
+                        INNER JOIN Peca p
+                            ON t.cd_peca = p.cd_peca
+                        INNER JOIN Usuario u
+                            ON t.cd_usuario = u.cd_usuario
+                        WHERE e.cd_patrimonio = @patrimonio
+                        AND t.dt_manutencao BETWEEN @inicio AND @fim
+                        ORDER BY t.dt_manutencao";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
