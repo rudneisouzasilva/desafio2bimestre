@@ -13,6 +13,7 @@ namespace Desafio_AD_BD
         private static SqlConnection conn =
             new SqlConnection(strConexao);
 
+        //================= CONEXÃO =================
         public static void Conectar()
         {
             if (conn.State == ConnectionState.Closed)
@@ -25,6 +26,7 @@ namespace Desafio_AD_BD
                 conn.Close();
         }
 
+        // ================= CADASTRAR =================
         public static void InserirTarefa(Tarefas tarefa)
         {
             Conectar();
@@ -74,12 +76,8 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
-        public static DataTable ConsultarManutencoes
-        (
-            string patrimonio,
-            DateTime dataInicio,
-            DateTime dataFim
-        )
+        // ================= CONSULTAR =================
+        public static DataTable ConsultarManutencoes(string patrimonio, DateTime dataInicio, DateTime dataFim)
         {
             Conectar();
 
@@ -116,6 +114,7 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
+        //Metodo para buscar o código do equipamento com base no patrimônio
         private static int BuscarCodigoEquipamento(string patrimonio)
         {
             string sql = @"
@@ -135,6 +134,7 @@ namespace Desafio_AD_BD
             return Convert.ToInt32(resultado);
         }
 
+        //Metodo para buscar o código da peça com base no nome
         private static int BuscarCodigoPeca(string nomePeca)
         {
             string sql = @"

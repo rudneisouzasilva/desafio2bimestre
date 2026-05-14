@@ -6,12 +6,14 @@ namespace Desafio_AD_BD
 {
     public partial class InscricaoUIL : Form
     {
+        //Metodo construtor
         public InscricaoUIL()
         {
             InitializeComponent();
             textBoxPassword.UseSystemPasswordChar = true;
         }
 
+        // Evento para buscar o endereço ao sair do campo de CEP
         private async void maskedTextBoxCep_Leave(object sender, EventArgs e)
         {
             textBoxRua.Enabled = false;
@@ -43,6 +45,7 @@ namespace Desafio_AD_BD
             textBoxUF.Text = endereco.uf;
         }
 
+        // Evento para mostrar ou ocultar a senha
         private void linkLabelMostrar_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (linkLabelMostrar.Text == "Mostrar senha")
@@ -57,6 +60,7 @@ namespace Desafio_AD_BD
             }
         }
 
+        // Evento para cadastrar o usuário
         private void buttonInscrever_Click(object sender, EventArgs e)
         {
             UsuarioBLL inscricaoBll = new UsuarioBLL();
@@ -88,6 +92,7 @@ namespace Desafio_AD_BD
             this.Close();
         }
 
+        // Evento para cancelar o cadastro
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -7,6 +7,7 @@ namespace Desafio_AD_BD
 {
     internal class ApisDAL
     {
+        //Metodo para buscar o endereço a partir do CEP utilizando a API ViaCEP
         public static async Task<Endereco> BuscarCepAsync(string cep)
         {
             try

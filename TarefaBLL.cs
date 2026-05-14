@@ -20,12 +20,7 @@ namespace Desafio_AD_BD
 
         // ================= CONSULTAR =================
 
-        public DataTable ConsultarManutencoes
-        (
-            string patrimonio,
-            DateTime dataInicio,
-            DateTime dataFim
-        )
+        public DataTable ConsultarManutencoes(string patrimonio,DateTime dataInicio,DateTime dataFim)
         {
             if (patrimonio.Trim() == "")
             {

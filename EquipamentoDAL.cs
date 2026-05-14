@@ -29,6 +29,7 @@ namespace Desafio_AD_BD
 
         // ================= EQUIPAMENTO =================
 
+        //Metodo para inserir um novo equipamento no banco de dados
         public static void InserirEquipamento(Equipamentos equipamento)
         {
             Conectar();
@@ -72,6 +73,7 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
+        //Metodo para consultar um equipamento no banco de dados a partir do patrimônio
         public static DataTable ConsultarEquipamentoPorPatrimonio(Equipamentos equipamento)
         {
             Conectar();
@@ -112,6 +114,7 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
+        //Metodo para atualizar um equipamento no banco de dados
         public static void AtualizarEquipamento(Equipamentos equipamento)
         {
             Conectar();
@@ -148,6 +151,7 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
+        //Metodo para excluir um equipamento do banco de dados a partir do patrimônio
         public static void ExcluirEquipamento(Equipamentos equipamento)
         {
             Conectar();
@@ -190,6 +194,7 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
+        //Metodo para verificar se um equipamento existe no banco de dados a partir do patrimônio
         public static bool PatrimonioExiste(string patrimonio)
         {
             Conectar();
@@ -212,6 +217,7 @@ namespace Desafio_AD_BD
 
         // ================= PEÇAS =================
 
+        //Metodo para listar todas as peças disponíveis no banco de dados
         public static DataTable ListarPecas()
         {
             Conectar();
@@ -235,6 +241,7 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
+        //Metodo para listar um valor unico dentre os valores distintos de uma coluna específica (Local, Fabricante ou Modelo) do banco de dados
         public static DataTable ListarDistinct(string coluna)
         {
             Conectar();
@@ -276,6 +283,7 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
+        //Metodo para listar as peças associadas a um equipamento específico a partir do patrimônio
         public static DataTable ListarPecasPorPatrimonio(string patrimonio)
         {
             Conectar();
@@ -306,6 +314,7 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
+        //Metodo para inserir as peças associadas a um equipamento específico no banco de dados
         private static void InserirPecasDoEquipamento(Equipamentos equipamento)
         {
             int cdEquipamento = BuscarCodigoEquipamento(equipamento.Patrimonio);
@@ -335,6 +344,7 @@ namespace Desafio_AD_BD
             }
         }
 
+        //Metodo para excluir as peças associadas a um equipamento específico do banco de dados a partir do patrimônio
         private static void ExcluirPecasDoEquipamento(string patrimonio)
         {
             int cdEquipamento = BuscarCodigoEquipamento(patrimonio);
@@ -350,6 +360,7 @@ namespace Desafio_AD_BD
             cmd.ExecuteNonQuery();
         }
 
+        //Metodo para buscar o código do equipamento a partir do patrimônio
         private static int BuscarCodigoEquipamento(string patrimonio)
         {
             string sql = @"
@@ -369,6 +380,7 @@ namespace Desafio_AD_BD
             return Convert.ToInt32(resultado);
         }
 
+        //Metodo para buscar o código da peça a partir do nome da peça ou inserir a peça caso ela não exista no banco de dados
         private static int BuscarOuInserirPeca(string nomePeca)
         {
             string sqlBusca = @"

@@ -14,6 +14,7 @@ namespace Desafio_AD_BD
         private List<Tarefas> tarefas = new List<Tarefas>();
         private int cdUsuarioLogado;
 
+        // ================= CONSTRUTOR =================
         public UsuarioUIL(int cdUsuario)
         {
             InitializeComponent();
@@ -25,6 +26,7 @@ namespace Desafio_AD_BD
             LimparCampos();
         }
 
+        //Metodo para consultar o equipamento pelo patrimônio e exibir os detalhes
         private void buttonRead_Click(object sender, EventArgs e)
         {
             EquipamentoBLL equipamentoBLL = new EquipamentoBLL();
@@ -69,6 +71,7 @@ namespace Desafio_AD_BD
             textBoxPatrimonio.Enabled = false;
         }
 
+        //Metodo para carregar as peças do equipamento no comboBox
         private void CarregarPecasPorPatrimonio(string patrimonio)
         {
             Erro.setErro(false);
@@ -96,6 +99,7 @@ namespace Desafio_AD_BD
             comboBoxPecas.SelectedIndex = -1;
         }
 
+        //Metodo para limpar os campos do formulário
         public void LimparCampos()
         {
             labelLocal.Visible = false;
@@ -121,11 +125,13 @@ namespace Desafio_AD_BD
             textBoxPatrimonio.Focus();
         }
 
+        //Metodo para limpar os campos do formulário ao clicar no botão "Limpar"
         private void buttonLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
         }
 
+        //Metodo para finalizar o programa ao clicar no botão "Finalizar"
         private void buttonFinalizar_Click(object sender, EventArgs e)
         {
             DialogResult resultado = MessageBox.Show(
@@ -141,6 +147,7 @@ namespace Desafio_AD_BD
             }
         }
 
+        //Metodo para adicionar a tarefa à lista e salvar no banco de dados ao clicar no botão "Adicionar"
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
             Tarefas tarefa = new Tarefas();
@@ -185,6 +192,7 @@ namespace Desafio_AD_BD
 
         StringBuilder relatorio = new StringBuilder();
 
+        //Metodo para gerar o relatório das tarefas ao clicar no botão "Gerar Relatório"
         private void buttonGerar_Click(object sender, EventArgs e)
         {
             if (tarefas.Count == 0)
@@ -219,6 +227,7 @@ namespace Desafio_AD_BD
             previsualizacao.ShowDialog();
         }
 
+        //Metodo para imprimir o relatório ao clicar no botão "Imprimir" na pré-visualização
         private void relatorio_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             SolidBrush mCaneta = new SolidBrush(Color.Black);

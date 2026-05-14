@@ -75,6 +75,7 @@ namespace Desafio_AD_BD
 
             return Convert.ToInt32(resultado);
         }
+
         // ================= CADASTRO =================
 
         public static void InserirUsuario(Usuario usuario)

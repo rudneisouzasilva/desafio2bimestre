@@ -10,17 +10,20 @@ namespace Desafio_AD_BD
     {
         public List<string> PecasSelecionadas { get; private set; } = new List<string>();
 
+        // Método construtor
         public PecasUIL()
         {
             InitializeComponent();
         }
 
+        // Evento de carregamento do formulário
         private void PecasUIL_Load(object sender, EventArgs e)
         {
             CarregarPecas();
             listBoxPecas.SelectionMode = SelectionMode.MultiSimple;
         }
 
+        // Método para carregar as peças do banco de dados
         private void CarregarPecas()
         {
             listBoxPecas.Items.Clear();
@@ -35,6 +38,7 @@ namespace Desafio_AD_BD
             listBoxPecas.ClearSelected();
         }
 
+        // Evento para adicionar uma nova peça
         private void buttonNovaPeca_Click(object sender, EventArgs e)
         {
             EquipamentoBLL bll = new EquipamentoBLL();
@@ -54,9 +58,10 @@ namespace Desafio_AD_BD
                 listBoxPecas.Items.Add(novaPeca);
             }
 
-            textBoxNovaPeca.Clear();
+            textBoxNovaPeca.Text = "";
         }
 
+        // Evento para confirmar a seleção das peças
         private void buttonConfirmar_Click(object sender, EventArgs e)
         {
             PecasSelecionadas.Clear();
@@ -76,6 +81,7 @@ namespace Desafio_AD_BD
             this.Close();
         }
 
+        // Evento para cancelar a seleção das peças
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
