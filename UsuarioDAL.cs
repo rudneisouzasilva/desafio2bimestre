@@ -7,8 +7,7 @@ namespace Desafio_AD_BD
 {
     internal class UsuarioDAL
     {
-        private static string strConexao =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=desafio2bimestre;Integrated Security=True";
+        private static string strConexao = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=desafio2bimestre;Integrated Security=True";
 
         private static SqlConnection conn =
             new SqlConnection(strConexao);
