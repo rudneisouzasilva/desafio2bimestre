@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using ClassErro;
+using System.Drawing;
 
 namespace Desafio_AD_BD
 {
@@ -11,6 +12,12 @@ namespace Desafio_AD_BD
         {
             InitializeComponent();
             textBoxPassword.UseSystemPasswordChar = true;
+            Estilizar();
+        }
+
+        private void Estilizar()
+        {
+            this.Size = new System.Drawing.Size(432, 712);
         }
 
         // Evento para buscar o endereço ao sair do campo de CEP
@@ -96,6 +103,12 @@ namespace Desafio_AD_BD
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void InscricaoUIL_Load(object sender, EventArgs e)
+        {
+            linkLabelMostrar.Top = textBoxPassword.Top + textBoxPassword.Height;
+            linkLabelMostrar.Left = textBoxPassword.Left + textBoxPassword.Width - linkLabelMostrar.Width;
         }
     }
 }
