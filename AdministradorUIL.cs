@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace Desafio_AD_BD
 {
@@ -13,6 +15,60 @@ namespace Desafio_AD_BD
         public AdministradorUIL()
         {
             InitializeComponent();
+            Estilizar();
+        }
+
+        private void Estilizar()
+        {
+            // Form
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+            this.Text = "SIGEM - Administrador";
+
+            // TabControl e TabPages
+            tabControl1.Font = new Font("Segoe UI", 11);
+            tabPage1.Text = "Cadastro de equipamentos";
+            tabPage2.Text = "Consulta de manutenções";
+
+            // Componentes do tabPage1
+            comboBoxLocal.Size =  comboBoxFabricante.Size = comboBoxModelo.Size = new Size(240, 36);
+            comboBoxLocal.Font = comboBoxFabricante.Font = comboBoxModelo.Font = new Font("Segoe UI", 12);
+            comboBoxLocal.BackColor = comboBoxFabricante.BackColor = comboBoxModelo.BackColor = ColorTranslator.FromHtml("#F1EFE8");
+            comboBoxLocal.DropDownStyle = comboBoxFabricante.DropDownStyle = comboBoxModelo.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxLocal.FlatStyle = comboBoxFabricante.FlatStyle = comboBoxModelo.FlatStyle = FlatStyle.Flat;
+            textBoxPatrimonio.Size = new Size(240, 36);
+            textBoxPatrimonio.Font = new Font("Segoe UI", 12);
+            textBoxPatrimonio.BackColor = ColorTranslator.FromHtml("#F1EFE8");
+            textBoxPatrimonio.BorderStyle = BorderStyle.FixedSingle;
+            textBoxPecas.Size = new Size(140, 36);
+            textBoxPecas.Font = new Font("Segoe UI", 12);
+            textBoxPecas.BackColor = ColorTranslator.FromHtml("#F1EFE8");
+            textBoxPecas.BorderStyle = BorderStyle.FixedSingle;
+            buttonAdicionar.Size = new Size(240, 36);
+            buttonAdicionar.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+            buttonAdicionar.ForeColor = ColorTranslator.FromHtml("#2C2C2A");
+            buttonAdicionar.FlatStyle = FlatStyle.Flat;
+            buttonAdicionar.FlatAppearance.BorderSize = 1;
+            buttonAdicionar.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#B4B2A9");
+            buttonAdicionar.Font = new Font("Segoe UI", 11);
+            buttonConsultar.Size = buttonAtualizar.Size = buttonExcluir.Size = buttonInserir.Size = new Size(116, 36);
+            buttonConsultar.Font = buttonAtualizar.Font = buttonExcluir.Font = buttonInserir.Font = new Font("Segoe UI", 11);
+            buttonConsultar.FlatStyle = buttonAtualizar.FlatStyle = buttonExcluir.FlatStyle = buttonInserir.FlatStyle = FlatStyle.Flat;
+            buttonConsultar.FlatAppearance.BorderColor = buttonAtualizar.FlatAppearance.BorderColor = buttonInserir.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#B4B2A9");
+            buttonConsultar.ForeColor = buttonAtualizar.ForeColor = ColorTranslator.FromHtml("#2C2C2A");
+            buttonInserir.BackColor = ColorTranslator.FromHtml("#1A1A18");
+            buttonInserir.ForeColor = ColorTranslator.FromHtml("#F1EFE8");
+            buttonInserir.FlatAppearance.BorderSize = 0;
+            buttonExcluir.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#A32D2D");
+            buttonExcluir.ForeColor = ColorTranslator.FromHtml("#A32D2D");
+            buttonLimpar.Size = buttonFinalizar.Size = new Size(116, 36);
+            buttonLimpar.Font = buttonFinalizar.Font = new Font("Segoe UI", 11);
+            buttonLimpar.FlatStyle = buttonFinalizar.FlatStyle = FlatStyle.Flat;
+            buttonLimpar.FlatAppearance.BorderColor = buttonFinalizar.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#B4B2A9");
+            buttonLimpar.ForeColor = buttonFinalizar.ForeColor = ColorTranslator.FromHtml("#888780");
+            buttonLimpar.BackColor = buttonFinalizar.BackColor = ColorTranslator.FromHtml("#FFFFFF");
         }
 
         //Evento de carregamento da tela, chama os métodos para carregar os combos e limpar os campos
@@ -20,6 +76,13 @@ namespace Desafio_AD_BD
         {
             CarregarCombos();
             LimparCampos();
+            buttonInserir.Top = buttonConsultar.Top = buttonAdicionar.Bottom + 16;
+            buttonConsultar.Left = buttonInserir.Right + 8;
+            buttonAtualizar.Top = buttonExcluir.Top = buttonInserir.Bottom + 16;
+            buttonExcluir.Left = buttonAtualizar.Right + 8;
+            buttonLimpar.Top = buttonFinalizar.Top = buttonAtualizar.Bottom + 8;
+            buttonLimpar.Left = buttonInserir.Left;
+            buttonFinalizar.Left = buttonLimpar.Right + 8;
         }
 
         //Evento de mudança de seleção do comboBoxLocal, exibe ou oculta os campos para inserir um novo local dependendo se a opção "Outros" foi selecionada ou não
@@ -333,6 +396,21 @@ namespace Desafio_AD_BD
             }
 
             dataGridViewManutencoes.DataSource = resultado;
+        }
+
+        private void textBoxLocais_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxFabricantes_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxModelos_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
