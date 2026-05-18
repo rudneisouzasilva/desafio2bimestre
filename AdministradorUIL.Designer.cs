@@ -33,6 +33,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdministradorUIL));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelaAdicionar = new System.Windows.Forms.Label();
+            this.labelConsultarEditar = new System.Windows.Forms.Label();
             this.buttonFinalizar = new System.Windows.Forms.Button();
             this.labelNovoModelo = new System.Windows.Forms.Label();
             this.labelNovoFabricante = new System.Windows.Forms.Label();
@@ -57,16 +59,14 @@
             this.labelFabricante = new System.Windows.Forms.Label();
             this.labelLocal = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.dateTimePickerFim = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerInicio = new System.Windows.Forms.DateTimePicker();
             this.buttonConsultarManutencoes = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxPatrimonio2 = new System.Windows.Forms.TextBox();
             this.dataGridViewManutencoes = new System.Windows.Forms.DataGridView();
-            this.labelConsultarEditar = new System.Windows.Forms.Label();
-            this.labelaAdicionar = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -78,7 +78,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(16, 16);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(692, 680);
@@ -119,6 +119,28 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastro de equipamentos";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // labelaAdicionar
+            // 
+            this.labelaAdicionar.AutoSize = true;
+            this.labelaAdicionar.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelaAdicionar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.labelaAdicionar.Location = new System.Drawing.Point(420, 16);
+            this.labelaAdicionar.Name = "labelaAdicionar";
+            this.labelaAdicionar.Size = new System.Drawing.Size(193, 20);
+            this.labelaAdicionar.TabIndex = 33;
+            this.labelaAdicionar.Text = "ADICIONAR INFORMAÇÕES";
+            // 
+            // labelConsultarEditar
+            // 
+            this.labelConsultarEditar.AutoSize = true;
+            this.labelConsultarEditar.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelConsultarEditar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.labelConsultarEditar.Location = new System.Drawing.Point(16, 16);
+            this.labelConsultarEditar.Name = "labelConsultarEditar";
+            this.labelConsultarEditar.Size = new System.Drawing.Size(240, 20);
+            this.labelConsultarEditar.TabIndex = 32;
+            this.labelConsultarEditar.Text = "INFORMAÇÕES DO EQUIPAMENTO";
             // 
             // buttonFinalizar
             // 
@@ -445,6 +467,28 @@
             this.tabPage2.Text = "Consulta de manuntenções";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.label2.Location = new System.Drawing.Point(360, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(40, 25);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Até";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.label1.Location = new System.Drawing.Point(180, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 25);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "De";
+            // 
             // dateTimePickerFim
             // 
             this.dateTimePickerFim.CalendarFont = new System.Drawing.Font("Segoe UI", 11F);
@@ -525,62 +569,19 @@
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewManutencoes.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewManutencoes.EnableHeadersVisualStyles = false;
             this.dataGridViewManutencoes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(209)))), ((int)(((byte)(199)))));
-            this.dataGridViewManutencoes.Location = new System.Drawing.Point(0, 120);
+            this.dataGridViewManutencoes.Location = new System.Drawing.Point(16, 120);
             this.dataGridViewManutencoes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridViewManutencoes.Name = "dataGridViewManutencoes";
             this.dataGridViewManutencoes.RowHeadersVisible = false;
             this.dataGridViewManutencoes.RowHeadersWidth = 62;
             this.dataGridViewManutencoes.RowTemplate.Height = 28;
-            this.dataGridViewManutencoes.Size = new System.Drawing.Size(859, 397);
+            this.dataGridViewManutencoes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewManutencoes.Size = new System.Drawing.Size(632, 499);
             this.dataGridViewManutencoes.TabIndex = 0;
-            // 
-            // labelConsultarEditar
-            // 
-            this.labelConsultarEditar.AutoSize = true;
-            this.labelConsultarEditar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.labelConsultarEditar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.labelConsultarEditar.Location = new System.Drawing.Point(16, 16);
-            this.labelConsultarEditar.Name = "labelConsultarEditar";
-            this.labelConsultarEditar.Size = new System.Drawing.Size(240, 20);
-            this.labelConsultarEditar.TabIndex = 32;
-            this.labelConsultarEditar.Text = "INFORMAÇÕES DO EQUIPAMENTO";
-            // 
-            // labelaAdicionar
-            // 
-            this.labelaAdicionar.AutoSize = true;
-            this.labelaAdicionar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.labelaAdicionar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.labelaAdicionar.Location = new System.Drawing.Point(420, 16);
-            this.labelaAdicionar.Name = "labelaAdicionar";
-            this.labelaAdicionar.Size = new System.Drawing.Size(193, 20);
-            this.labelaAdicionar.TabIndex = 33;
-            this.labelaAdicionar.Text = "ADICIONAR INFORMAÇÕES";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.label1.Location = new System.Drawing.Point(180, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 25);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "De";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.label2.Location = new System.Drawing.Point(360, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 25);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Até";
             // 
             // AdministradorUIL
             // 
