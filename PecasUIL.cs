@@ -14,6 +14,7 @@ namespace Desafio_AD_BD
         public PecasUIL()
         {
             InitializeComponent();
+            textBoxNovaPeca.Size = new System.Drawing.Size(textBoxNovaPeca.Width, buttonNovaPeca.Height);
         }
 
         // Evento de carregamento do formulário
