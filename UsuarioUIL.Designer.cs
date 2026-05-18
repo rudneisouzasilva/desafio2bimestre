@@ -55,12 +55,16 @@
             this.labelSigem = new System.Windows.Forms.Label();
             this.labelTitulo = new System.Windows.Forms.Label();
             this.panelCardInfo = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelModelo2 = new System.Windows.Forms.Label();
+            this.labelFabricante2 = new System.Windows.Forms.Label();
+            this.labelLocal2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panelCardInfo.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -165,7 +169,7 @@
             this.radioButtonCorretiva.AutoSize = true;
             this.radioButtonCorretiva.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.radioButtonCorretiva.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(42)))));
-            this.radioButtonCorretiva.Location = new System.Drawing.Point(157, 331);
+            this.radioButtonCorretiva.Location = new System.Drawing.Point(129, 0);
             this.radioButtonCorretiva.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButtonCorretiva.Name = "radioButtonCorretiva";
             this.radioButtonCorretiva.Size = new System.Drawing.Size(110, 29);
@@ -179,7 +183,7 @@
             this.radioButtonPreventiva.AutoSize = true;
             this.radioButtonPreventiva.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.radioButtonPreventiva.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(42)))));
-            this.radioButtonPreventiva.Location = new System.Drawing.Point(28, 331);
+            this.radioButtonPreventiva.Location = new System.Drawing.Point(0, 0);
             this.radioButtonPreventiva.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButtonPreventiva.Name = "radioButtonPreventiva";
             this.radioButtonPreventiva.Size = new System.Drawing.Size(121, 29);
@@ -193,7 +197,7 @@
             this.radioButtonTroca.AutoSize = true;
             this.radioButtonTroca.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.radioButtonTroca.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(42)))));
-            this.radioButtonTroca.Location = new System.Drawing.Point(128, 478);
+            this.radioButtonTroca.Location = new System.Drawing.Point(100, 0);
             this.radioButtonTroca.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButtonTroca.Name = "radioButtonTroca";
             this.radioButtonTroca.Size = new System.Drawing.Size(78, 29);
@@ -207,7 +211,7 @@
             this.radioButtonReparo.AutoSize = true;
             this.radioButtonReparo.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.radioButtonReparo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(42)))));
-            this.radioButtonReparo.Location = new System.Drawing.Point(28, 478);
+            this.radioButtonReparo.Location = new System.Drawing.Point(0, 0);
             this.radioButtonReparo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButtonReparo.Name = "radioButtonReparo";
             this.radioButtonReparo.Size = new System.Drawing.Size(92, 29);
@@ -381,9 +385,9 @@
             // 
             this.panelCardInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(239)))), ((int)(((byte)(232)))));
             this.panelCardInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelCardInfo.Controls.Add(this.label8);
-            this.panelCardInfo.Controls.Add(this.label3);
-            this.panelCardInfo.Controls.Add(this.label2);
+            this.panelCardInfo.Controls.Add(this.labelModelo2);
+            this.panelCardInfo.Controls.Add(this.labelFabricante2);
+            this.panelCardInfo.Controls.Add(this.labelLocal2);
             this.panelCardInfo.Controls.Add(this.labelLocal);
             this.panelCardInfo.Controls.Add(this.labelFabricante);
             this.panelCardInfo.Controls.Add(this.labelModelo);
@@ -392,41 +396,41 @@
             this.panelCardInfo.Size = new System.Drawing.Size(284, 90);
             this.panelCardInfo.TabIndex = 55;
             // 
-            // label8
+            // labelModelo2
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.label8.Location = new System.Drawing.Point(12, 59);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 25);
-            this.label8.TabIndex = 55;
-            this.label8.Text = "Modelo";
-            this.label8.Visible = false;
+            this.labelModelo2.AutoSize = true;
+            this.labelModelo2.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.labelModelo2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.labelModelo2.Location = new System.Drawing.Point(12, 59);
+            this.labelModelo2.Name = "labelModelo2";
+            this.labelModelo2.Size = new System.Drawing.Size(77, 25);
+            this.labelModelo2.TabIndex = 55;
+            this.labelModelo2.Text = "Modelo";
+            this.labelModelo2.Visible = false;
             // 
-            // label3
+            // labelFabricante2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.label3.Location = new System.Drawing.Point(12, 33);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(99, 25);
-            this.label3.TabIndex = 54;
-            this.label3.Text = "Fabricante";
-            this.label3.Visible = false;
+            this.labelFabricante2.AutoSize = true;
+            this.labelFabricante2.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.labelFabricante2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.labelFabricante2.Location = new System.Drawing.Point(12, 33);
+            this.labelFabricante2.Name = "labelFabricante2";
+            this.labelFabricante2.Size = new System.Drawing.Size(99, 25);
+            this.labelFabricante2.TabIndex = 54;
+            this.labelFabricante2.Text = "Fabricante";
+            this.labelFabricante2.Visible = false;
             // 
-            // label2
+            // labelLocal2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
-            this.label2.Location = new System.Drawing.Point(12, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 25);
-            this.label2.TabIndex = 53;
-            this.label2.Text = "Local";
-            this.label2.Visible = false;
+            this.labelLocal2.AutoSize = true;
+            this.labelLocal2.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.labelLocal2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(135)))), ((int)(((byte)(128)))));
+            this.labelLocal2.Location = new System.Drawing.Point(12, 6);
+            this.labelLocal2.Name = "labelLocal2";
+            this.labelLocal2.Size = new System.Drawing.Size(56, 25);
+            this.labelLocal2.TabIndex = 53;
+            this.labelLocal2.Text = "Local";
+            this.labelLocal2.Visible = false;
             // 
             // label9
             // 
@@ -450,19 +454,43 @@
             this.label10.TabIndex = 57;
             this.label10.Text = "Observações";
             // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.radioButtonPreventiva);
+            this.panel1.Controls.Add(this.radioButtonCorretiva);
+            this.panel1.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.panel1.Location = new System.Drawing.Point(28, 331);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(242, 31);
+            this.panel1.TabIndex = 58;
+            // 
+            // panel2
+            // 
+            this.panel2.AutoSize = true;
+            this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.Controls.Add(this.radioButtonReparo);
+            this.panel2.Controls.Add(this.radioButtonTroca);
+            this.panel2.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.panel2.Location = new System.Drawing.Point(28, 478);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(181, 31);
+            this.panel2.TabIndex = 59;
+            // 
             // UsuarioUIL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(642, 653);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.radioButtonTroca);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.radioButtonReparo);
-            this.Controls.Add(this.radioButtonCorretiva);
             this.Controls.Add(this.panelCardInfo);
-            this.Controls.Add(this.radioButtonPreventiva);
             this.Controls.Add(this.labelTitulo);
             this.Controls.Add(this.labelSigem);
             this.Controls.Add(this.buttonLimpar);
@@ -489,6 +517,10 @@
             this.Load += new System.EventHandler(this.UsuarioUIL_Load);
             this.panelCardInfo.ResumeLayout(false);
             this.panelCardInfo.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -522,10 +554,12 @@
         private System.Windows.Forms.Label labelSigem;
         private System.Windows.Forms.Label labelTitulo;
         private System.Windows.Forms.Panel panelCardInfo;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelModelo2;
+        private System.Windows.Forms.Label labelFabricante2;
+        private System.Windows.Forms.Label labelLocal2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

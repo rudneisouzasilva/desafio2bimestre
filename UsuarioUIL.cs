@@ -67,12 +67,15 @@ namespace Desafio_AD_BD
 
             labelLocal.Text = row["Local"].ToString();
             labelLocal.Visible = true;
+            labelLocal2.Visible = true;
 
             labelFabricante.Text = row["Fabricante"].ToString();
             labelFabricante.Visible = true;
+            labelFabricante2.Visible = true;
 
             labelModelo.Text = row["Modelo"].ToString();
             labelModelo.Visible = true;
+            labelModelo2.Visible = true;
 
             CarregarPecasPorPatrimonio(equipamentos.Patrimonio);
 
