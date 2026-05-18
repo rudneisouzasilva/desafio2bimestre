@@ -24,6 +24,14 @@ namespace Desafio_AD_BD
         private void UsuarioUIL_Load(object sender, EventArgs e)
         {
             LimparCampos();
+            buttonAdicionar.Top = buttonGerar.Bottom + 8;
+            buttonAdicionar.Size = new Size(buttonGerar.Width, buttonGerar.Height);
+            buttonLimpar.Left = buttonGerar.Right + 8;
+            buttonLimpar.Top = buttonGerar.Top;
+            buttonLimpar.Size = new Size(100, buttonGerar.Height);
+            buttonFinalizar.Left = buttonLimpar.Left;
+            buttonFinalizar.Top = buttonLimpar.Bottom + 8;
+            buttonFinalizar.Size = new Size(100, buttonGerar.Height);
         }
 
         //Metodo para consultar o equipamento pelo patrimônio e exibir os detalhes
