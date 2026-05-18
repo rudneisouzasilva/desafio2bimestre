@@ -24,7 +24,7 @@ namespace Desafio_AD_BD
         private void Estilizar()
         {
             // Form
-            this.Size = new Size(400, 460);
+            this.Size = new Size(344, 460);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.BackColor = ColorTranslator.FromHtml("#FFFFFF");
@@ -74,6 +74,7 @@ namespace Desafio_AD_BD
             buttonEntrar.FlatStyle = FlatStyle.Flat;
             buttonEntrar.FlatAppearance.BorderSize = 0;
             buttonEntrar.Font = new Font("Segoe UI", 12);
+            buttonEntrar.Cursor = Cursors.Hand;
 
             // LinkLabel inscreva-se
             linkLabelInscrever.Font = new Font("Segoe UI", 11);
