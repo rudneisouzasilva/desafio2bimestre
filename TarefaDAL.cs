@@ -33,9 +33,9 @@ namespace Desafio_AD_BD
             string sql = @"
                 INSERT INTO Tarefa
                 (
-                    cd_usuario,
-                    cd_equipamento,
+                    cd_patrimonio,
                     cd_peca,
+                    ds_login,
                     ic_tipo_manutencao,
                     ic_tipo_servico,
                     dt_manutencao,
@@ -43,9 +43,9 @@ namespace Desafio_AD_BD
                 )
                 VALUES
                 (
-                    @cd_usuario,
-                    @cd_equipamento,
+                    @patrimonio,
                     @cd_peca,
+                    @login,
                     @tipo_manutencao,
                     @tipo_servico,
                     @data_manutencao,
@@ -54,9 +54,9 @@ namespace Desafio_AD_BD
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
-            cmd.Parameters.AddWithValue("@cd_usuario", tarefa.CdUsuario);
-            cmd.Parameters.AddWithValue("@cd_equipamento", BuscarCodigoEquipamento(tarefa.Patrimonio));
+            cmd.Parameters.AddWithValue("@patrimonio", tarefa.Patrimonio);
             cmd.Parameters.AddWithValue("@cd_peca", BuscarCodigoPeca(tarefa.Peca));
+            cmd.Parameters.AddWithValue("@login", tarefa.LoginUsuario);
             cmd.Parameters.AddWithValue("@tipo_manutencao", tarefa.TipoManutencao);
             cmd.Parameters.AddWithValue("@tipo_servico", tarefa.TipoServico);
             cmd.Parameters.AddWithValue("@data_manutencao", tarefa.DataManutencao);
@@ -67,9 +67,9 @@ namespace Desafio_AD_BD
                 cmd.ExecuteNonQuery();
                 Erro.setErro(false);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Erro.setMsg("Erro ao cadastrar tarefa.");
+                Erro.setMsg("Erro ao cadastrar tarefa: " + ex.Message);
             }
 
             Desconectar();
@@ -81,25 +81,25 @@ namespace Desafio_AD_BD
             Conectar();
 
             string sql = @"
-                        SELECT
-                            u.nm_usuario AS Usuario,
-                            e.nm_local AS Local,
-                            e.nm_fabricante + ' ' + e.nm_modelo AS Equipamento,
-                            t.ic_tipo_manutencao AS Manutencao,
-                            p.nm_peca AS Peca,
-                            t.ic_tipo_servico AS Servico,
-                            t.dt_manutencao AS Data,
-                            t.ds_observacoes AS Observacoes
-                        FROM Tarefa t
-                        INNER JOIN Equipamento e
-                            ON t.cd_equipamento = e.cd_equipamento
-                        INNER JOIN Peca p
-                            ON t.cd_peca = p.cd_peca
-                        INNER JOIN Usuario u
-                            ON t.cd_usuario = u.cd_usuario
-                        WHERE e.cd_patrimonio = @patrimonio
-                        AND t.dt_manutencao BETWEEN @inicio AND @fim
-                        ORDER BY t.dt_manutencao";
+                SELECT
+                    u.nm_usuario AS Usuario,
+                    e.nm_local AS Local,
+                    e.nm_fabricante + ' ' + e.nm_modelo AS Equipamento,
+                    t.ic_tipo_manutencao AS Manutencao,
+                    p.nm_peca AS Peca,
+                    t.ic_tipo_servico AS Servico,
+                    t.dt_manutencao AS Data,
+                    t.ds_observacoes AS Observacoes
+                FROM Tarefa t
+                INNER JOIN Equipamento e
+                    ON t.cd_patrimonio = e.cd_patrimonio
+                INNER JOIN Peca p
+                    ON t.cd_peca = p.cd_peca
+                INNER JOIN Usuario u
+                    ON t.ds_login = u.ds_login
+                WHERE t.cd_patrimonio = @patrimonio
+                AND t.dt_manutencao BETWEEN @inicio AND @fim
+                ORDER BY t.dt_manutencao";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -116,26 +116,6 @@ namespace Desafio_AD_BD
             Desconectar();
 
             return tabela;
-        }
-
-        //Metodo para buscar o código do equipamento com base no patrimônio
-        private static int BuscarCodigoEquipamento(string patrimonio)
-        {
-            string sql = @"
-                SELECT cd_equipamento
-                FROM Equipamento
-                WHERE cd_patrimonio = @patrimonio";
-
-            SqlCommand cmd = new SqlCommand(sql, conn);
-
-            cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
-
-            object resultado = cmd.ExecuteScalar();
-
-            if (resultado == null)
-                return 0;
-
-            return Convert.ToInt32(resultado);
         }
 
         //Metodo para buscar o código da peça com base no nome

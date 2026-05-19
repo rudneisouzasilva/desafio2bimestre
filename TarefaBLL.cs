@@ -20,8 +20,10 @@ namespace Desafio_AD_BD
 
         // ================= CONSULTAR =================
 
-        public DataTable ConsultarManutencoes(string patrimonio,DateTime dataInicio,DateTime dataFim)
+        public DataTable ConsultarManutencoes(string patrimonio, DateTime dataInicio, DateTime dataFim)
         {
+            Erro.setErro(false);
+
             if (patrimonio.Trim() == "")
             {
                 Erro.setMsg("Informe o patrimônio.");
@@ -48,21 +50,34 @@ namespace Desafio_AD_BD
         {
             Erro.setErro(false);
 
+            tarefa.Patrimonio = tarefa.Patrimonio?.Trim();
+            tarefa.Peca = tarefa.Peca?.Trim();
+            tarefa.LoginUsuario = tarefa.LoginUsuario?.Trim();
+            tarefa.TipoManutencao = tarefa.TipoManutencao?.Trim();
+            tarefa.TipoServico = tarefa.TipoServico?.Trim();
+            tarefa.Observacoes = tarefa.Observacoes?.Trim();
+
             if (string.IsNullOrWhiteSpace(tarefa.Patrimonio))
             {
                 Erro.setMsg("Informe o patrimônio.");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(tarefa.TipoManutencao))
-            {
-                Erro.setMsg("Informe o tipo de manutenção.");
-                return;
-            }
-
             if (string.IsNullOrWhiteSpace(tarefa.Peca))
             {
                 Erro.setMsg("Informe a peça.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tarefa.LoginUsuario))
+            {
+                Erro.setMsg("Usuário logado não identificado.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tarefa.TipoManutencao))
+            {
+                Erro.setMsg("Informe o tipo de manutenção.");
                 return;
             }
 

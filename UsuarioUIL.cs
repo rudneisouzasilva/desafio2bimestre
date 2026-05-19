@@ -12,13 +12,13 @@ namespace Desafio_AD_BD
     public partial class UsuarioUIL : Form
     {
         private List<Tarefas> tarefas = new List<Tarefas>();
-        private int cdUsuarioLogado;
+        private string loginUsuarioLogado;
 
         // ================= CONSTRUTOR =================
-        public UsuarioUIL(int cdUsuario)
+        public UsuarioUIL(string loginUsuario)
         {
             InitializeComponent();
-            cdUsuarioLogado = cdUsuario;
+            loginUsuarioLogado = loginUsuario;
         }
 
         private void UsuarioUIL_Load(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace Desafio_AD_BD
             tarefa.Local = labelLocal.Text;
             tarefa.Fabricante = labelFabricante.Text;
             tarefa.Modelo = labelModelo.Text;
-            tarefa.CdUsuario = cdUsuarioLogado;
+            tarefa.LoginUsuario = loginUsuarioLogado;
 
             tarefa.TipoManutencao = radioButtonPreventiva.Checked
                 ? "Preventiva"

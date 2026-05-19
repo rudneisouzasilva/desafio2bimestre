@@ -156,8 +156,7 @@ namespace Desafio_AD_BD
             }
             else
             {
-                int cdUsuario = UsuarioDAL.BuscarCodigoUsuarioPorLogin(textBoxLogin.Text.Trim());
-                tela = new UsuarioUIL(cdUsuario);
+                tela = new UsuarioUIL(textBoxLogin.Text.Trim());
             }
             tela.Show();
         }

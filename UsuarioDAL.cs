@@ -33,10 +33,10 @@ namespace Desafio_AD_BD
             Conectar();
 
             string sql = @"
-        SELECT ic_tipo
-        FROM Usuario
-        WHERE ds_login = @login
-        AND ds_senha = @senha";
+                SELECT ic_tipo
+                FROM Usuario
+                WHERE ds_login = @login
+                AND ds_senha = @senha";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -52,28 +52,6 @@ namespace Desafio_AD_BD
 
             return resultado.ToString();
         }
-        public static int BuscarCodigoUsuarioPorLogin(string login)
-        {
-            Conectar();
-
-            string sql = @"
-        SELECT cd_usuario
-        FROM Usuario
-        WHERE ds_login = @login";
-
-            SqlCommand cmd = new SqlCommand(sql, conn);
-
-            cmd.Parameters.AddWithValue("@login", login);
-
-            object resultado = cmd.ExecuteScalar();
-
-            Desconectar();
-
-            if (resultado == null)
-                return 0;
-
-            return Convert.ToInt32(resultado);
-        }
 
         // ================= CADASTRO =================
 
@@ -81,57 +59,49 @@ namespace Desafio_AD_BD
         {
             Conectar();
 
-            string sql = @"
-        INSERT INTO Usuario
-        (
-            nm_usuario,
-            ds_login,
-            ds_senha,
-            ds_telefone,
-            ds_email,
-            cd_cep,
-            nm_rua,
-            ds_numero,
-            nm_bairro,
-            nm_cidade,
-            sg_uf,
-            ds_complemento,
-            ic_tipo
-        )
-        VALUES
-        (
-            @nome,
-            @login,
-            @senha,
-            @telefone,
-            @email,
-            @cep,
-            @rua,
-            @numero,
-            @bairro,
-            @cidade,
-            @uf,
-            @complemento,
-            'USUARIO'
-        )";
-
-            SqlCommand cmd = new SqlCommand(sql, conn);
-
-            cmd.Parameters.AddWithValue("@nome", usuario.Nome);
-            cmd.Parameters.AddWithValue("@login", usuario.Login);
-            cmd.Parameters.AddWithValue("@senha", usuario.Senha);
-            cmd.Parameters.AddWithValue("@telefone", usuario.Telefone);
-            cmd.Parameters.AddWithValue("@email", usuario.Email);
-            cmd.Parameters.AddWithValue("@cep", usuario.CEP);
-            cmd.Parameters.AddWithValue("@rua", usuario.Rua);
-            cmd.Parameters.AddWithValue("@numero", usuario.Numero);
-            cmd.Parameters.AddWithValue("@bairro", usuario.Bairro);
-            cmd.Parameters.AddWithValue("@cidade", usuario.Cidade);
-            cmd.Parameters.AddWithValue("@uf", usuario.UF);
-            cmd.Parameters.AddWithValue("@complemento", usuario.Complemento);
-
             try
             {
+                InserirCepSeNaoExistir(usuario);
+
+                string sql = @"
+                    INSERT INTO Usuario
+                    (
+                        ds_login,
+                        cd_cep,
+                        ds_senha,
+                        nm_usuario,
+                        ds_telefone,
+                        ds_email,
+                        ds_numero,
+                        ic_tipo
+                    )
+                    VALUES
+                    (
+                        @login,
+                        @cep,
+                        @senha,
+                        @nome,
+                        @telefone,
+                        @email,
+                        @numero,
+                        @tipo
+                    )";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                cmd.Parameters.AddWithValue("@login", usuario.Login);
+                cmd.Parameters.AddWithValue("@cep", usuario.CEP);
+                cmd.Parameters.AddWithValue("@senha", usuario.Senha);
+                cmd.Parameters.AddWithValue("@nome", usuario.Nome);
+                cmd.Parameters.AddWithValue("@telefone", usuario.Telefone);
+                cmd.Parameters.AddWithValue("@email", usuario.Email);
+                cmd.Parameters.AddWithValue("@numero", usuario.Numero);
+
+                if (string.IsNullOrWhiteSpace(usuario.Tipo))
+                    cmd.Parameters.AddWithValue("@tipo", "USUARIO");
+                else
+                    cmd.Parameters.AddWithValue("@tipo", usuario.Tipo);
+
                 cmd.ExecuteNonQuery();
 
                 Erro.setErro(false);
@@ -142,6 +112,52 @@ namespace Desafio_AD_BD
             }
 
             Desconectar();
+        }
+
+        // ================= CEP =================
+
+        private static void InserirCepSeNaoExistir(Usuario usuario)
+        {
+            string sqlConsulta = @"
+                SELECT COUNT(*)
+                FROM CEP
+                WHERE cd_cep = @cep";
+
+            SqlCommand cmdConsulta = new SqlCommand(sqlConsulta, conn);
+            cmdConsulta.Parameters.AddWithValue("@cep", usuario.CEP);
+
+            int quantidade = Convert.ToInt32(cmdConsulta.ExecuteScalar());
+
+            if (quantidade > 0)
+                return;
+
+            string sqlInsere = @"
+                INSERT INTO CEP
+                (
+                    cd_cep,
+                    nm_rua,
+                    nm_bairro,
+                    nm_cidade,
+                    sg_uf
+                )
+                VALUES
+                (
+                    @cep,
+                    @rua,
+                    @bairro,
+                    @cidade,
+                    @uf
+                )";
+
+            SqlCommand cmdInsere = new SqlCommand(sqlInsere, conn);
+
+            cmdInsere.Parameters.AddWithValue("@cep", usuario.CEP);
+            cmdInsere.Parameters.AddWithValue("@rua", usuario.Rua);
+            cmdInsere.Parameters.AddWithValue("@bairro", usuario.Bairro);
+            cmdInsere.Parameters.AddWithValue("@cidade", usuario.Cidade);
+            cmdInsere.Parameters.AddWithValue("@uf", usuario.UF);
+
+            cmdInsere.ExecuteNonQuery();
         }
     }
 }

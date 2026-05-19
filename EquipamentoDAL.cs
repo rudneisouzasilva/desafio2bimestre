@@ -36,25 +36,25 @@ namespace Desafio_AD_BD
             string sql = @"
                 INSERT INTO Equipamento
                 (
+                    cd_patrimonio,
                     nm_local,
                     nm_fabricante,
-                    nm_modelo,
-                    cd_patrimonio
+                    nm_modelo
                 )
                 VALUES
                 (
+                    @patrimonio,
                     @local,
                     @fabricante,
-                    @modelo,
-                    @patrimonio
+                    @modelo
                 )";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
+            cmd.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
             cmd.Parameters.AddWithValue("@local", equipamento.Local);
             cmd.Parameters.AddWithValue("@fabricante", equipamento.Fabricante);
             cmd.Parameters.AddWithValue("@modelo", equipamento.Modelo);
-            cmd.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
 
             try
             {
@@ -64,9 +64,9 @@ namespace Desafio_AD_BD
 
                 Erro.setErro(false);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Erro.setMsg("Erro ao cadastrar equipamento.");
+                Erro.setMsg("Erro ao cadastrar equipamento: " + ex.Message);
             }
 
             Desconectar();
@@ -78,25 +78,23 @@ namespace Desafio_AD_BD
             Conectar();
 
             string sql = @"
-        SELECT
-            e.cd_equipamento,
-            e.nm_local AS Local,
-            e.nm_fabricante AS Fabricante,
-            e.nm_modelo AS Modelo,
-            e.cd_patrimonio AS Patrimonio,
-            ISNULL(STRING_AGG(p.nm_peca, ', '), '') AS Pecas
-        FROM Equipamento e
-        LEFT JOIN Equipamento_Peca ep
-            ON e.cd_equipamento = ep.cd_equipamento
-        LEFT JOIN Peca p
-            ON ep.cd_peca = p.cd_peca
-        WHERE e.cd_patrimonio = @patrimonio
-        GROUP BY
-            e.cd_equipamento,
-            e.nm_local,
-            e.nm_fabricante,
-            e.nm_modelo,
-            e.cd_patrimonio";
+                SELECT
+                    e.cd_patrimonio AS Patrimonio,
+                    e.nm_local AS Local,
+                    e.nm_fabricante AS Fabricante,
+                    e.nm_modelo AS Modelo,
+                    ISNULL(STRING_AGG(p.nm_peca, ', '), '') AS Pecas
+                FROM Equipamento e
+                LEFT JOIN Equipamento_Peca ep
+                    ON e.cd_patrimonio = ep.cd_patrimonio
+                LEFT JOIN Peca p
+                    ON ep.cd_peca = p.cd_peca
+                WHERE e.cd_patrimonio = @patrimonio
+                GROUP BY
+                    e.cd_patrimonio,
+                    e.nm_local,
+                    e.nm_fabricante,
+                    e.nm_modelo";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -142,9 +140,9 @@ namespace Desafio_AD_BD
 
                 Erro.setErro(false);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Erro.setMsg("Erro ao atualizar equipamento.");
+                Erro.setMsg("Erro ao atualizar equipamento: " + ex.Message);
             }
 
             Desconectar();
@@ -157,30 +155,28 @@ namespace Desafio_AD_BD
 
             try
             {
-                int cdEquipamento = BuscarCodigoEquipamento(equipamento.Patrimonio);
-
                 string sqlTarefa = @"
-            DELETE FROM Tarefa
-            WHERE cd_equipamento = @cd_equipamento";
+                    DELETE FROM Tarefa
+                    WHERE cd_patrimonio = @patrimonio";
 
                 SqlCommand cmdTarefa = new SqlCommand(sqlTarefa, conn);
-                cmdTarefa.Parameters.AddWithValue("@cd_equipamento", cdEquipamento);
+                cmdTarefa.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
                 cmdTarefa.ExecuteNonQuery();
 
                 string sqlPecas = @"
-            DELETE FROM Equipamento_Peca
-            WHERE cd_equipamento = @cd_equipamento";
+                    DELETE FROM Equipamento_Peca
+                    WHERE cd_patrimonio = @patrimonio";
 
                 SqlCommand cmdPecas = new SqlCommand(sqlPecas, conn);
-                cmdPecas.Parameters.AddWithValue("@cd_equipamento", cdEquipamento);
+                cmdPecas.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
                 cmdPecas.ExecuteNonQuery();
 
                 string sqlEquipamento = @"
-            DELETE FROM Equipamento
-            WHERE cd_equipamento = @cd_equipamento";
+                    DELETE FROM Equipamento
+                    WHERE cd_patrimonio = @patrimonio";
 
                 SqlCommand cmdEquipamento = new SqlCommand(sqlEquipamento, conn);
-                cmdEquipamento.Parameters.AddWithValue("@cd_equipamento", cdEquipamento);
+                cmdEquipamento.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
                 cmdEquipamento.ExecuteNonQuery();
 
                 Erro.setErro(false);
@@ -294,7 +290,7 @@ namespace Desafio_AD_BD
                 INNER JOIN Equipamento_Peca ep
                     ON p.cd_peca = ep.cd_peca
                 INNER JOIN Equipamento e
-                    ON ep.cd_equipamento = e.cd_equipamento
+                    ON ep.cd_patrimonio = e.cd_patrimonio
                 WHERE e.cd_patrimonio = @patrimonio
                 ORDER BY p.nm_peca";
 
@@ -316,8 +312,6 @@ namespace Desafio_AD_BD
         //Metodo para inserir as peças associadas a um equipamento específico no banco de dados
         private static void InserirPecasDoEquipamento(Equipamentos equipamento)
         {
-            int cdEquipamento = BuscarCodigoEquipamento(equipamento.Patrimonio);
-
             foreach (string nomePeca in equipamento.Pecas)
             {
                 int cdPeca = BuscarOuInserirPeca(nomePeca);
@@ -325,18 +319,18 @@ namespace Desafio_AD_BD
                 string sql = @"
                     INSERT INTO Equipamento_Peca
                     (
-                        cd_equipamento,
+                        cd_patrimonio,
                         cd_peca
                     )
                     VALUES
                     (
-                        @cd_equipamento,
+                        @patrimonio,
                         @cd_peca
                     )";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@cd_equipamento", cdEquipamento);
+                cmd.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
                 cmd.Parameters.AddWithValue("@cd_peca", cdPeca);
 
                 cmd.ExecuteNonQuery();
@@ -346,37 +340,15 @@ namespace Desafio_AD_BD
         //Metodo para excluir as peças associadas a um equipamento específico do banco de dados a partir do patrimônio
         private static void ExcluirPecasDoEquipamento(string patrimonio)
         {
-            int cdEquipamento = BuscarCodigoEquipamento(patrimonio);
-
             string sql = @"
                 DELETE FROM Equipamento_Peca
-                WHERE cd_equipamento = @cd_equipamento";
-
-            SqlCommand cmd = new SqlCommand(sql, conn);
-
-            cmd.Parameters.AddWithValue("@cd_equipamento", cdEquipamento);
-
-            cmd.ExecuteNonQuery();
-        }
-
-        //Metodo para buscar o código do equipamento a partir do patrimônio
-        private static int BuscarCodigoEquipamento(string patrimonio)
-        {
-            string sql = @"
-                SELECT cd_equipamento
-                FROM Equipamento
                 WHERE cd_patrimonio = @patrimonio";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
             cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
 
-            object resultado = cmd.ExecuteScalar();
-
-            if (resultado == null)
-                return 0;
-
-            return Convert.ToInt32(resultado);
+            cmd.ExecuteNonQuery();
         }
 
         //Metodo para buscar o código da peça a partir do nome da peça ou inserir a peça caso ela não exista no banco de dados
