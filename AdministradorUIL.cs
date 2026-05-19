@@ -248,7 +248,7 @@ namespace Desafio_AD_BD
         //Metodo para abrir a tela de seleção de peças e atualizar a lista de peças selecionadas na tela principal
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
-            PecasUIL tela = new PecasUIL();
+            PecasUIL tela = new PecasUIL(pecasSelecionadas);
 
             if (tela.ShowDialog() == DialogResult.OK)
             {
@@ -296,6 +296,24 @@ namespace Desafio_AD_BD
             textBoxFabricantes.Text = row["Fabricante"].ToString();
             textBoxModelos.Text = row["Modelo"].ToString();
             textBoxPecas.Text = row["Pecas"].ToString();
+            pecasSelecionadas.Clear();
+
+            string pecasTexto = row["Pecas"].ToString();
+
+            if (!string.IsNullOrWhiteSpace(pecasTexto))
+            {
+                string[] pecas = pecasTexto.Split(',');
+
+                foreach (string peca in pecas)
+                {
+                    string nomePeca = peca.Trim();
+
+                    if (nomePeca != "" && !pecasSelecionadas.Contains(nomePeca))
+                    {
+                        pecasSelecionadas.Add(nomePeca);
+                    }
+                }
+            }
         }
 
         //Metodo para atualizar um equipamento com base nos dados preenchidos na tela, caso o patrimônio informado exista no banco, caso contrário exibir uma mensagem de erro

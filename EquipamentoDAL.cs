@@ -1,5 +1,6 @@
 ﻿using ClassErro;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -28,7 +29,6 @@ namespace Desafio_AD_BD
 
         // ================= EQUIPAMENTO =================
 
-        //Metodo para inserir um novo equipamento no banco de dados
         public static void InserirEquipamento(Equipamentos equipamento)
         {
             Conectar();
@@ -60,7 +60,7 @@ namespace Desafio_AD_BD
             {
                 cmd.ExecuteNonQuery();
 
-                InserirPecasDoEquipamento(equipamento);
+                SincronizarPecasDoEquipamento(equipamento);
 
                 Erro.setErro(false);
             }
@@ -72,7 +72,6 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
-        //Metodo para consultar um equipamento no banco de dados a partir do patrimônio
         public static DataTable ConsultarEquipamentoPorPatrimonio(Equipamentos equipamento)
         {
             Conectar();
@@ -111,7 +110,6 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
-        //Metodo para atualizar um equipamento no banco de dados
         public static void AtualizarEquipamento(Equipamentos equipamento)
         {
             Conectar();
@@ -135,8 +133,7 @@ namespace Desafio_AD_BD
             {
                 cmd.ExecuteNonQuery();
 
-                ExcluirPecasDoEquipamento(equipamento.Patrimonio);
-                InserirPecasDoEquipamento(equipamento);
+                SincronizarPecasDoEquipamento(equipamento);
 
                 Erro.setErro(false);
             }
@@ -148,7 +145,6 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
-        //Metodo para excluir um equipamento do banco de dados a partir do patrimônio
         public static void ExcluirEquipamento(Equipamentos equipamento)
         {
             Conectar();
@@ -189,7 +185,6 @@ namespace Desafio_AD_BD
             Desconectar();
         }
 
-        //Metodo para verificar se um equipamento existe no banco de dados a partir do patrimônio
         public static bool PatrimonioExiste(string patrimonio)
         {
             Conectar();
@@ -212,7 +207,6 @@ namespace Desafio_AD_BD
 
         // ================= PEÇAS =================
 
-        //Metodo para listar todas as peças disponíveis no banco de dados
         public static DataTable ListarPecas()
         {
             Conectar();
@@ -236,7 +230,6 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
-        //Metodo para listar um valor unico dentre os valores distintos de uma coluna específica (Local, Fabricante ou Modelo) do banco de dados
         public static DataTable ListarDistinct(string coluna)
         {
             Conectar();
@@ -278,7 +271,6 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
-        //Metodo para listar as peças associadas a um equipamento específico a partir do patrimônio
         public static DataTable ListarPecasPorPatrimonio(string patrimonio)
         {
             Conectar();
@@ -309,14 +301,47 @@ namespace Desafio_AD_BD
             return tabela;
         }
 
-        //Metodo para inserir as peças associadas a um equipamento específico no banco de dados
-        private static void InserirPecasDoEquipamento(Equipamentos equipamento)
+        private static void SincronizarPecasDoEquipamento(Equipamentos equipamento)
         {
+            List<int> codigosSelecionados = new List<int>();
+
             foreach (string nomePeca in equipamento.Pecas)
             {
-                int cdPeca = BuscarOuInserirPeca(nomePeca);
+                if (string.IsNullOrWhiteSpace(nomePeca))
+                    continue;
 
-                string sql = @"
+                int cdPeca = BuscarOuInserirPeca(nomePeca.Trim());
+
+                codigosSelecionados.Add(cdPeca);
+
+                InserirVinculoSeNaoExistir(equipamento.Patrimonio, cdPeca);
+            }
+
+            List<int> codigosAtuais = BuscarCodigosPecasDoEquipamento(equipamento.Patrimonio);
+
+            foreach (int cdPecaAtual in codigosAtuais)
+            {
+                if (!codigosSelecionados.Contains(cdPecaAtual))
+                {
+                    if (!PecaPossuiTarefa(equipamento.Patrimonio, cdPecaAtual))
+                    {
+                        ExcluirVinculoPeca(equipamento.Patrimonio, cdPecaAtual);
+                    }
+                }
+            }
+        }
+
+        private static void InserirVinculoSeNaoExistir(string patrimonio, int cdPeca)
+        {
+            string sql = @"
+                IF NOT EXISTS
+                (
+                    SELECT 1
+                    FROM Equipamento_Peca
+                    WHERE cd_patrimonio = @patrimonio
+                    AND cd_peca = @cd_peca
+                )
+                BEGIN
                     INSERT INTO Equipamento_Peca
                     (
                         cd_patrimonio,
@@ -326,32 +351,75 @@ namespace Desafio_AD_BD
                     (
                         @patrimonio,
                         @cd_peca
-                    )";
+                    )
+                END";
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlCommand cmd = new SqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@patrimonio", equipamento.Patrimonio);
-                cmd.Parameters.AddWithValue("@cd_peca", cdPeca);
+            cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
+            cmd.Parameters.AddWithValue("@cd_peca", cdPeca);
 
-                cmd.ExecuteNonQuery();
-            }
+            cmd.ExecuteNonQuery();
         }
 
-        //Metodo para excluir as peças associadas a um equipamento específico do banco de dados a partir do patrimônio
-        private static void ExcluirPecasDoEquipamento(string patrimonio)
+        private static void ExcluirVinculoPeca(string patrimonio, int cdPeca)
         {
             string sql = @"
                 DELETE FROM Equipamento_Peca
+                WHERE cd_patrimonio = @patrimonio
+                AND cd_peca = @cd_peca";
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
+            cmd.Parameters.AddWithValue("@cd_peca", cdPeca);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private static bool PecaPossuiTarefa(string patrimonio, int cdPeca)
+        {
+            string sql = @"
+                SELECT COUNT(*)
+                FROM Tarefa
+                WHERE cd_patrimonio = @patrimonio
+                AND cd_peca = @cd_peca";
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
+            cmd.Parameters.AddWithValue("@cd_peca", cdPeca);
+
+            int quantidade = Convert.ToInt32(cmd.ExecuteScalar());
+
+            return quantidade > 0;
+        }
+
+        private static List<int> BuscarCodigosPecasDoEquipamento(string patrimonio)
+        {
+            List<int> codigos = new List<int>();
+
+            string sql = @"
+                SELECT cd_peca
+                FROM Equipamento_Peca
                 WHERE cd_patrimonio = @patrimonio";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
 
             cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
 
-            cmd.ExecuteNonQuery();
+            SqlDataReader leitor = cmd.ExecuteReader();
+
+            while (leitor.Read())
+            {
+                codigos.Add(Convert.ToInt32(leitor["cd_peca"]));
+            }
+
+            leitor.Close();
+
+            return codigos;
         }
 
-        //Metodo para buscar o código da peça a partir do nome da peça ou inserir a peça caso ela não exista no banco de dados
         private static int BuscarOuInserirPeca(string nomePeca)
         {
             string sqlBusca = @"

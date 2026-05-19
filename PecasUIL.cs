@@ -9,6 +9,7 @@ namespace Desafio_AD_BD
     public partial class PecasUIL : Form
     {
         public List<string> PecasSelecionadas { get; private set; } = new List<string>();
+        private List<string> pecasPreSelecionadas = new List<string>();
 
         // Método construtor
         public PecasUIL()
@@ -16,12 +17,24 @@ namespace Desafio_AD_BD
             InitializeComponent();
             textBoxNovaPeca.Size = new System.Drawing.Size(textBoxNovaPeca.Width, buttonNovaPeca.Height);
         }
+        public PecasUIL(List<string> pecasAtuais)
+        {
+            InitializeComponent();
+
+            textBoxNovaPeca.Size = new System.Drawing.Size(textBoxNovaPeca.Width, buttonNovaPeca.Height);
+
+            if (pecasAtuais != null)
+            {
+                pecasPreSelecionadas = new List<string>(pecasAtuais);
+            }
+        }
 
         // Evento de carregamento do formulário
         private void PecasUIL_Load(object sender, EventArgs e)
         {
-            CarregarPecas();
             listBoxPecas.SelectionMode = SelectionMode.MultiSimple;
+            CarregarPecas();
+            MarcarPecasPreSelecionadas();
         }
 
         // Método para carregar as peças do banco de dados
@@ -38,6 +51,21 @@ namespace Desafio_AD_BD
 
             listBoxPecas.ClearSelected();
         }
+        private void MarcarPecasPreSelecionadas()
+        {
+            if (pecasPreSelecionadas == null || pecasPreSelecionadas.Count == 0)
+                return;
+
+            for (int i = 0; i < listBoxPecas.Items.Count; i++)
+            {
+                string nomePeca = listBoxPecas.Items[i].ToString();
+
+                if (pecasPreSelecionadas.Contains(nomePeca))
+                {
+                    listBoxPecas.SetSelected(i, true);
+                }
+            }
+        }
 
         // Evento para adicionar uma nova peça
         private void buttonNovaPeca_Click(object sender, EventArgs e)
@@ -48,15 +76,16 @@ namespace Desafio_AD_BD
 
             bll.ValidarNovaPeca(novaPeca);
 
-            if (Erro.getErro())
-            {
-                MessageBox.Show(Erro.getMsg());
-                return;
-            }
-
             if (!listBoxPecas.Items.Contains(novaPeca))
             {
                 listBoxPecas.Items.Add(novaPeca);
+            }
+
+            int indice = listBoxPecas.Items.IndexOf(novaPeca);
+
+            if (indice >= 0)
+            {
+                listBoxPecas.SetSelected(indice, true);
             }
 
             textBoxNovaPeca.Text = "";
