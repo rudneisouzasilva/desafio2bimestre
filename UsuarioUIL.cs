@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Word = Microsoft.Office.Interop.Word;
+using System.Diagnostics;
 
 namespace Desafio_AD_BD
 {
@@ -216,26 +218,51 @@ namespace Desafio_AD_BD
                 .ThenBy(t => t.Patrimonio)
                 .GroupBy(t => t.DataManutencao.Date);
 
-            foreach (var grupo in tarefasPorDia)
+            Word.Application word = new Word.Application();
+            Word.Document doc = word.Documents.Add();
+            Word.Selection texto = word.Selection;
+            doc.Activate();
+
+            try
             {
-                relatorio.AppendLine(grupo.Key.ToString("dd/MM/yyyy"));
-                relatorio.AppendLine("----------------------------------------");
-
-                foreach (Tarefas tarefa in grupo)
+                foreach (var grupo in tarefasPorDia)
                 {
-                    relatorio.AppendLine(
-                        $"{tarefa.DataManutencao:dd/MM/yyyy} - " +
-                        $"Manutenção {tarefa.TipoManutencao} no equipamento " +
-                        $"{tarefa.Fabricante} {tarefa.Modelo} de patrimônio {tarefa.Patrimonio} | " +
-                        $"Realizado {tarefa.TipoServico} da peça {tarefa.Peca}. " +
-                        $"{tarefa.Observacoes}"
-                    );
+                    texto.TypeText(grupo.Key.ToString("dd/MM/yyyy"));
+                    texto.TypeParagraph();
+                    texto.TypeText("----------------------------------------");
+                    texto.TypeParagraph();
+
+                    foreach (Tarefas tarefa in grupo)
+                    {
+                        texto.TypeText($"{tarefa.DataManutencao:dd/MM/yyyy} - " +
+                            $"Manutenção {tarefa.TipoManutencao} no equipamento " +
+                            $"{tarefa.Fabricante} {tarefa.Modelo} de patrimônio {tarefa.Patrimonio} | " +
+                            $"Realizado {tarefa.TipoServico} da peça {tarefa.Peca}. " +
+                            $"{tarefa.Observacoes}");
+                        texto.TypeParagraph();
+                    }
                 }
-
-                relatorio.AppendLine();
+                doc.SaveAs(@"C:\Users\unisanta\Documents\relatorio.docx");
+                
+                MessageBox.Show("Documento criado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                word.Visible = true;
+                // Process.Start(new ProcessStartInfo(@"C:\Users\unisanta\Documents\relatorio.docx") { UseShellExecute = true });
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message);
 
-            previsualizacao.ShowDialog();
+            }
+            //finally
+            //{
+            //    if (doc != null)
+            //    {
+            //        doc.close();
+            //        marshall.
+            //    }
+            //}
+            //word.Documents.Close();
+            //word.Quit();
         }
 
         //Metodo para imprimir o relatório ao clicar no botão "Imprimir" na pré-visualização
