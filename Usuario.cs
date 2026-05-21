@@ -29,5 +29,7 @@ namespace Desafio_AD_BD
         public string Cidade { get; set; }
 
         public string UF { get; set; }
+
+        public string Complemento { get; set; }
     }
 }

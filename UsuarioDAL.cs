@@ -73,6 +73,7 @@ namespace Desafio_AD_BD
                         ds_telefone,
                         ds_email,
                         ds_numero,
+                        ds_complemento,
                         ic_tipo
                     )
                     VALUES
@@ -84,6 +85,7 @@ namespace Desafio_AD_BD
                         @telefone,
                         @email,
                         @numero,
+                        @complemento,
                         @tipo
                     )";
 
@@ -96,6 +98,7 @@ namespace Desafio_AD_BD
                 cmd.Parameters.AddWithValue("@telefone", usuario.Telefone);
                 cmd.Parameters.AddWithValue("@email", usuario.Email);
                 cmd.Parameters.AddWithValue("@numero", usuario.Numero);
+                cmd.Parameters.AddWithValue("@complemento", usuario.Complemento);
 
                 if (string.IsNullOrWhiteSpace(usuario.Tipo))
                     cmd.Parameters.AddWithValue("@tipo", "USUARIO");

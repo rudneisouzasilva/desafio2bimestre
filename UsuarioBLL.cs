@@ -57,6 +57,7 @@ namespace Desafio_AD_BD
             usuario.Bairro = usuario.Bairro?.Trim();
             usuario.Cidade = usuario.Cidade?.Trim();
             usuario.UF = usuario.UF?.Trim().ToUpper();
+            usuario.Complemento = usuario.Complemento?.Trim();
 
             if (string.IsNullOrWhiteSpace(usuario.Nome) ||
                 string.IsNullOrWhiteSpace(usuario.Login) ||

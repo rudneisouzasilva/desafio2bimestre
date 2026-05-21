@@ -85,6 +85,7 @@ namespace Desafio_AD_BD
             usuario.Bairro = textBoxBairro.Text;
             usuario.Cidade = textBoxCidade.Text;
             usuario.UF = textBoxUF.Text;
+            usuario.Complemento = textBoxComplemento.Text;
 
             inscricaoBll.CadastrarUsuario(usuario);
 
