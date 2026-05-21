@@ -42,10 +42,6 @@ namespace Desafio_AD_BD
             textBoxPatrimonio.Font = new Font("Segoe UI", 12);
             textBoxPatrimonio.BackColor = ColorTranslator.FromHtml("#F1EFE8");
             textBoxPatrimonio.BorderStyle = BorderStyle.FixedSingle;
-            textBoxPecas.Size = new Size(140, 36);
-            textBoxPecas.Font = new Font("Segoe UI", 12);
-            textBoxPecas.BackColor = ColorTranslator.FromHtml("#F1EFE8");
-            textBoxPecas.BorderStyle = BorderStyle.FixedSingle;
             buttonAdicionar.Size = new Size(240, 36);
             buttonAdicionar.BackColor = ColorTranslator.FromHtml("#FFFFFF");
             buttonAdicionar.ForeColor = ColorTranslator.FromHtml("#2C2C2A");
@@ -182,14 +178,14 @@ namespace Desafio_AD_BD
             textBoxLocais.Clear();
             textBoxFabricantes.Clear();
             textBoxModelos.Clear();
-            textBoxPecas.Clear();
+            listBoxPecasVisualizacao.Items.Clear();
 
             pecasSelecionadas.Clear();
 
             textBoxLocais.Visible = false;
             textBoxFabricantes.Visible = false;
             textBoxModelos.Visible = false;
-            textBoxPecas.Visible = false;
+            listBoxPecasVisualizacao.Visible = false;
 
             labelNovoLocal.Visible = false;
             labelNovoFabricante.Visible = false;
@@ -255,8 +251,14 @@ namespace Desafio_AD_BD
                 pecasSelecionadas = tela.PecasSelecionadas;
 
                 labelPecas.Visible = true;
-                textBoxPecas.Visible = true;
-                textBoxPecas.Text = string.Join(", ", pecasSelecionadas);
+                listBoxPecasVisualizacao.Items.Clear();
+                //textBoxPecas.Visible = true;
+                //textBoxPecas.Text = string.Join(", ", pecasSelecionadas);
+                listBoxPecasVisualizacao.Visible = true;
+                foreach (var peca in pecasSelecionadas)
+                {
+                    listBoxPecasVisualizacao.Items.Add(peca);
+                }
 
                 MessageBox.Show("Peças selecionadas: " + string.Join(", ", pecasSelecionadas));
             }
@@ -290,12 +292,12 @@ namespace Desafio_AD_BD
             textBoxFabricantes.Visible = true;
             textBoxModelos.Visible = true;
             labelPecas.Visible = true;
-            textBoxPecas.Visible = true;
+            listBoxPecasVisualizacao.Visible = true;
 
             textBoxLocais.Text = row["Local"].ToString();
             textBoxFabricantes.Text = row["Fabricante"].ToString();
             textBoxModelos.Text = row["Modelo"].ToString();
-            textBoxPecas.Text = row["Pecas"].ToString();
+            listBoxPecasVisualizacao.Items.Clear();
             pecasSelecionadas.Clear();
 
             string pecasTexto = row["Pecas"].ToString();
@@ -311,6 +313,7 @@ namespace Desafio_AD_BD
                     if (nomePeca != "" && !pecasSelecionadas.Contains(nomePeca))
                     {
                         pecasSelecionadas.Add(nomePeca);
+                        listBoxPecasVisualizacao.Items.Add(nomePeca);
                     }
                 }
             }

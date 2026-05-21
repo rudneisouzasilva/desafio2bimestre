@@ -246,23 +246,12 @@ namespace Desafio_AD_BD
                 
                 MessageBox.Show("Documento criado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 word.Visible = true;
-                // Process.Start(new ProcessStartInfo(@"C:\Users\unisanta\Documents\relatorio.docx") { UseShellExecute = true });
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro: " + ex.Message);
 
             }
-            //finally
-            //{
-            //    if (doc != null)
-            //    {
-            //        doc.close();
-            //        marshall.
-            //    }
-            //}
-            //word.Documents.Close();
-            //word.Quit();
         }
 
         //Metodo para imprimir o relatório ao clicar no botão "Imprimir" na pré-visualização
