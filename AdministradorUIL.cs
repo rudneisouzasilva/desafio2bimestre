@@ -252,8 +252,6 @@ namespace Desafio_AD_BD
 
                 labelPecas.Visible = true;
                 listBoxPecasVisualizacao.Items.Clear();
-                //textBoxPecas.Visible = true;
-                //textBoxPecas.Text = string.Join(", ", pecasSelecionadas);
                 listBoxPecasVisualizacao.Visible = true;
                 foreach (var peca in pecasSelecionadas)
                 {
