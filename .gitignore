@@ -1,3 +1,11 @@
+# Visual Studio
 .vs/
+*.suo
+*.user
+
+# Build
 bin/
 obj/
+
+# Pacotes NuGet (restaurados automaticamente pelo Visual Studio)
+packages/
